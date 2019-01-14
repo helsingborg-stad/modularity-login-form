@@ -67,7 +67,7 @@ class Authentication
             //Login successful
             if (!is_wp_error($result)) {
                 return array(
-                    'message' => __('Login successful.', 'modularity-resource-booking'),
+                    'message' => __('Login successful.', 'modularity-login-form'),
                     'state' => 'success',
                     'user' => array_filter(
                         (array) $result->data,
@@ -82,7 +82,7 @@ class Authentication
             //Incorrect password
             if (is_wp_error($result) && $result->get_error_code() == "incorrect_password") {
                 return array(
-                    'message' => __('The username and password you provided did not match.', 'modularity-resource-booking'),
+                    'message' => __('The username and password you provided did not match.', 'modularity-login-form'),
                     'state' => 'error'
                 );
             }
@@ -90,14 +90,14 @@ class Authentication
             //User not exists
             if (is_wp_error($result) && $result->get_error_code() == "invalid_username") {
                 return array(
-                    'message' => __('The username or email that you provided does not exists.', 'modularity-resource-booking'),
+                    'message' => __('The username or email that you provided does not exists.', 'modularity-login-form'),
                     'state' => 'error'
                 );
             }
         }
 
         return array(
-            'message' => __('You have to provide both email and password.', 'modularity-resource-booking'),
+            'message' => __('You have to provide both email and password.', 'modularity-login-form'),
             'state' => 'error'
         );
     }
@@ -113,7 +113,7 @@ class Authentication
     {
         wp_logout();
         return array(
-            'message' => __('You have now logged out.', 'modularity-resource-booking'),
+            'message' => __('You have now logged out.', 'modularity-login-form'),
             'state' => 'success'
         );
     }
