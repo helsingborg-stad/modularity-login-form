@@ -16,18 +16,17 @@ const App = class {
      * @return void
      */
     requestLogin() {
-        let username = document.getElementById('authUsername').value;
+        const username = document.getElementById('authUsername').value;
         const password = document.getElementById('authPassword').value;
-        const apiUrl =
-            '/wp-json/ModularityLoginForm/v1/?token=' +
-            ModularityLoginFormObject.token +
-            '&username=' +
-            username +
-            '&password=' +
-            password;
-
         axios
-            .get(apiUrl)
+            .get(
+                '/wp-json/ModularityLoginForm/v1/?token=' +
+                    ModularityLoginFormObject.token +
+                    '&username=' +
+                    username +
+                    '&password=' +
+                    password
+            )
             .then(json => {
                 const jsonData = json.data.reverse();
                 console.log(jsonData);
