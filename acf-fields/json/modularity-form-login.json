@@ -1,0 +1,103 @@
+[{
+    "key": "group_5c3dbbb51fd4d",
+    "title": "Modularity Login Form",
+    "fields": [
+        {
+            "key": "field_5c3dbccb19105",
+            "label": "Mod Login to page",
+            "name": "mod_login_to_page",
+            "type": "page_link",
+            "instructions": "The page the login form transfer user to",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5c3de0b2b75f2",
+            "label": "Api encryption salt",
+            "name": "mod_login_form_api_encryption_salt",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Generates automaticly",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "disabled": true
+        },
+        {
+            "key": "field_5c3de127b75f3",
+            "label": "Api encryption key",
+            "name": "mod_login_form_api_encryption_key",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Generates automaticly",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "disabled": true
+        },
+        {
+            "key": "field_5c3de14bb75f4",
+            "label": "Api token",
+            "name": "mod_login_form_api_token",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Generates automaticly",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "disabled": true
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "mod-loginform"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": ""
+}]
+

@@ -57,7 +57,7 @@ class LoginForm extends \Modularity\Module
     {
         //Check if modularity is compatible.
         if (!class_exists('\Modularity\Helper\React')) {
-            error_log("Agreements archive cannot run. This plugin requires modularity version 2.11.0 or higher.");
+            error_log("Modularity Login form cannot run. This plugin requires modularity version 2.11.0 or higher.");
             return;
         }
 
@@ -68,7 +68,6 @@ class LoginForm extends \Modularity\Module
     }
 
 
-
     /**
      * Setting all variables for localize script
      *
@@ -77,12 +76,15 @@ class LoginForm extends \Modularity\Module
     public function scriptData()
     {
         $data = array();
-        $data['nonce'] = wp_create_nonce('ModularityLoginForm');
-        $data['authToken'] = \ModularityLoginForm\App::encrypt(get_option('group_5be98c9780f80_mod_login_form_api_token'));
+        $token = get_field_object('mod_login_form_api_token', $this->data['ID']);
+        $data['token'] = \ModularityLoginForm\App::encrypt($this->data, $token['value']);
 
         //Translation strings
         $data['translation'] = array(
             'title' => __('Modularity Login Form', 'modularity-login-form'),
+            'username' => __('Username', 'modularity-login-form'),
+            'password' => __('Password', 'modularity-login-form'),
+            'loginbtn' => __('Login', 'modularity-login-form'),
         );
 
         //Send to script

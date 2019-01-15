@@ -2,12 +2,23 @@
 
 namespace ModularityLoginForm\Api;
 
-class Authentication
+/**
+ * Class Authentication
+ * @package ModularityLoginForm\Api
+ */
+class Authentication extends \Modularity\Module
 {
+    /**
+     * @var
+     */
     public static $userId;
 
+    /**
+     * Authentication constructor.
+     */
     public function __construct()
     {
+
         //Run register rest routes
         add_action('rest_api_init', array($this, 'registerRestRoutes'));
     }
@@ -39,7 +50,6 @@ class Authentication
                 'callback' => array($this, 'logout')
             )
         );
-
     }
 
     /**
@@ -51,6 +61,20 @@ class Authentication
      */
     public function login($request)
     {
+        $token = $request->get_param('token');
+        $authToken = (isset($token) && !empty($token)) ? str_replace('"', '',
+            \ModularityLoginForm\App::decrypt($this->data, $token)) : '';
+
+        //No valid auth token
+        if ($authToken != get_field_object('mod_login_form_api_token', $this->data['ID'])) {
+            return wp_send_json(
+                array(
+                    'state' => 'error',
+                    'message' => __("No api-key entered, please provide one in the modularity login form settings.",
+                        'modularity-login-form')
+                )
+            );
+        }
 
         //Verify provided data
         if ($request->get_param('username') && $request->get_param('password')) {

@@ -34,7 +34,7 @@ $loader->register();
 
 // Start application
 new ModularityLoginForm\App();
-
+new ModularityLoginForm\Api\Authentication();
 
 // Acf auto import and export
 add_action('plugins_loaded', function () {
@@ -42,7 +42,7 @@ add_action('plugins_loaded', function () {
     $acfExportManager->setTextdomain('modularity-login-form');
     $acfExportManager->setExportFolder(MODULARITYLOGINFORM_PATH . 'acf-fields/');
     $acfExportManager->autoExport(array(
-        'modularity-form-login' => '',
+        'modularity-form-login' => 'group_5c3dbbb51fd4d',
     ));
     $acfExportManager->import();
 });
