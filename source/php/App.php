@@ -83,8 +83,13 @@ class App
     static function encryptDecrypt($module, $meth, $data)
     {
         $encryptMethod = 'AES-256-CBC';
-        $encryptSalt = get_field_object('mod_login_form_api_encryption_salt', $module['ID']);
-        $encryptKey = get_field_object('mod_login_form_api_encryption_key', $module['ID']);
+        if (is_array($module) or ($module instanceof Traversable)) {
+            $encryptSalt = get_field_object('mod_login_form_api_encryption_salt', $module['ID']);
+            $encryptKey = get_field_object('mod_login_form_api_encryption_key', $module['ID']);
+        } else {
+            $encryptSalt = get_field_object('mod_login_form_api_encryption_salt', $module);
+            $encryptKey = get_field_object('mod_login_form_api_encryption_key', $module);
+        }
 
         if ($encryptSalt['value'] && $encryptKey['value']) {
             switch ($meth) {
@@ -94,7 +99,6 @@ class App
                         substr(hash('sha256', $encryptSalt['value']), 0, 16)));
                     break;
                 case 'decrypt':
-
                     return openssl_decrypt(base64_decode($data), $encryptMethod,
                         hash('sha256', $encryptKey['value']), 0,
                         substr(hash('sha256', $encryptSalt['value']), 0, 16));

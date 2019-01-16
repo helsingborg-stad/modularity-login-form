@@ -75,16 +75,21 @@ class LoginForm extends \Modularity\Module
      */
     public function scriptData()
     {
-        $data = array();
         $token = get_field_object('mod_login_form_api_token', $this->data['ID']);
+        $page = get_field_object('mod_login_to_page', $this->data['ID']);
+
+        $data = array();
+        $data['moduleId'] = $this->data['ID'];
         $data['token'] = \ModularityLoginForm\App::encrypt($this->data, $token['value']);
+        $data['page'] = \ModularityLoginForm\App::encrypt($this->data, $page['value']);
 
         //Translation strings
         $data['translation'] = array(
             'title' => __('Modularity Login Form', 'modularity-login-form'),
-            'username' => __('Username', 'modularity-login-form'),
+            'username' => __('Username or E-mail', 'modularity-login-form'),
             'password' => __('Password', 'modularity-login-form'),
             'loginbtn' => __('Login', 'modularity-login-form'),
+            'timeout' => __('Please wait a bit, we preparing your login.', 'modularity-login-form'),
         );
 
         //Send to script

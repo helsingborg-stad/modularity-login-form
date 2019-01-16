@@ -6,7 +6,7 @@ namespace ModularityLoginForm\Api;
  * Class Authentication
  * @package ModularityLoginForm\Api
  */
-class Authentication extends \Modularity\Module
+class Authentication
 {
     /**
      * @var
@@ -18,7 +18,6 @@ class Authentication extends \Modularity\Module
      */
     public function __construct()
     {
-
         //Run register rest routes
         add_action('rest_api_init', array($this, 'registerRestRoutes'));
     }
@@ -36,7 +35,7 @@ class Authentication extends \Modularity\Module
             "ModularityLoginForm/v1",
             "Authentication/Login",
             array(
-                'methods' => \WP_REST_Server::CREATABLE,
+                'methods' => \WP_REST_Server::ALLMETHODS,
                 'callback' => array($this, 'login')
             )
         );
@@ -61,16 +60,17 @@ class Authentication extends \Modularity\Module
      */
     public function login($request)
     {
-        $token = $request->get_param('token');
-        $authToken = (isset($token) && !empty($token)) ? str_replace('"', '',
-            \ModularityLoginForm\App::decrypt($this->data, $token)) : '';
+
+        $moduleId = (int)$request->get_param('moduleId');
+        $authToken = str_replace('"', '', \ModularityLoginForm\App::decrypt($moduleId, $request->get_param('token')));
+        $moduleToken = get_field_object('mod_login_form_api_token', $moduleId);
 
         //No valid auth token
-        if ($authToken != get_field_object('mod_login_form_api_token', $this->data['ID'])) {
+        if ($authToken != $moduleToken['value']) {
             return wp_send_json(
                 array(
                     'state' => 'error',
-                    'message' => __("No api-key entered, please provide one in the modularity login form settings.",
+                    'message' => __("Token error!!!! Please provide one in the modularity login form settings.",
                         'modularity-login-form')
                 )
             );
@@ -90,11 +90,13 @@ class Authentication extends \Modularity\Module
 
             //Login successful
             if (!is_wp_error($result)) {
+                $page = str_replace('"', '', \ModularityLoginForm\App::decrypt($moduleId, $request->get_param('page')));
                 return array(
                     'message' => __('Login successful.', 'modularity-login-form'),
+                    'url' => $page,
                     'state' => 'success',
                     'user' => array_filter(
-                        (array) $result->data,
+                        (array)$result->data,
                         function ($itemKey) {
                             return in_array($itemKey, array('ID', 'user_login', 'display_name'));
                         },
@@ -114,7 +116,8 @@ class Authentication extends \Modularity\Module
             //User not exists
             if (is_wp_error($result) && $result->get_error_code() == "invalid_username") {
                 return array(
-                    'message' => __('The username or email that you provided does not exists.', 'modularity-login-form'),
+                    'message' => __('The username or email that you provided does not exists.',
+                        'modularity-login-form'),
                     'state' => 'error'
                 );
             }

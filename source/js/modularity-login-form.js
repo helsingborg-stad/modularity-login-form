@@ -1,43 +1,13 @@
 import '@babel/polyfill/noConflict';
-import axios from 'axios';
+import LoginForm from './Components/LoginForm.js';
+
+const domElement = document.getElementById('modularity-login-form');
 
 const App = class {
     constructor() {
-        this.state = {
-            responseData: [],
-            isLoaded: false,
-            errors: null,
-        };
         this.renderModule();
     }
 
-    /**
-     * Send Login details to API
-     * @return void
-     */
-    requestLogin() {
-        const username = document.getElementById('authUsername').value;
-        const password = document.getElementById('authPassword').value;
-        axios
-            .get(
-                '/wp-json/ModularityLoginForm/v1/?token=' +
-                    ModularityLoginFormObject.token +
-                    '&username=' +
-                    username +
-                    '&password=' +
-                    password
-            )
-            .then(json => {
-                const jsonData = json.data.reverse();
-                console.log(jsonData);
-            })
-            .catch(error => 'error');
-    }
-
-    /**
-     * Render Module
-     * @return jsx
-     */
     renderModule() {
         if (
             typeof ModularityLoginFormObject.token === 'undefined' ||
@@ -47,45 +17,12 @@ const App = class {
         }
 
         ReactDOM.render(
-            <div className="form-horizontal">
-                <div className="form-group">
-                    <label htmlFor="authUsername">
-                        {ModularityLoginFormObject.translation.username}
-                    </label>
-                    <input
-                        type="text"
-                        name="authUsername"
-                        id="authUsername"
-                        placeholder={
-                            ModularityLoginFormObject.translation.username
-                        }
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="authPassword">
-                        {ModularityLoginFormObject.translation.password}
-                    </label>
-                    <input
-                        type="password"
-                        name="authPassword"
-                        id="authPassword"
-                        placeholder={
-                            ModularityLoginFormObject.translation.password
-                        }
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="submit"
-                        className="btn btn-primary"
-                        value={ModularityLoginFormObject.translation.loginbtn}
-                        onClick={() => this.requestLogin()}
-                    />
-                </div>
+            <div>
+                <div id="modularity-login-form-message" />
+                <LoginForm />
             </div>,
-            document.getElementById('modularity-login-form')
+            domElement
         );
     }
 };
-
 new App();
