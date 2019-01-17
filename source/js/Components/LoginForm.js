@@ -9,7 +9,7 @@ export default class extends React.Component {
         super();
         this.state = {
             isLoaded: true,
-            messageText: null,
+            message: null,
         };
     }
 
@@ -50,7 +50,7 @@ export default class extends React.Component {
                             },
                         };
 
-                        this.setState({ messageText: message });
+                        this.setState({ message: message });
                         this.apiMessage();
 
                         break;
@@ -69,7 +69,7 @@ export default class extends React.Component {
                             },
                         };
 
-                        this.setState({ messageText: message });
+                        this.setState({ message: message });
                         this.apiMessage();
 
                         let transfer = (location.href = json.data.url.replace(/\\/g, ''));
@@ -100,7 +100,7 @@ export default class extends React.Component {
         messageContainer.innerHTML = '';
         messageContainer.removeAttribute('class');
 
-        const object = this.state.messageText;
+        const object = this.state.message;
         messageContainer.classList.add(...object.style.box);
 
         const createMessageContainerIcon = document.createElement('i');
