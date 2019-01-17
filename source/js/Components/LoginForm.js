@@ -9,6 +9,7 @@ export default class extends React.Component {
         super();
         this.state = {
             isLoaded: true,
+            messageText: null,
         };
     }
 
@@ -42,20 +43,25 @@ export default class extends React.Component {
                     case 'error':
                         this.setState({ isLoaded: true });
                         message = {
-                            data: json.data.message,
+                            text: json.data.message,
                             style: {
                                 box: ['danger', 'notice', 'notice-sm'],
                                 icon: 'pricon-notice-warning',
                             },
                         };
-                        this.apiMessage(message);
+
+                        this.setState({ messageText: message });
+                        this.apiMessage();
 
                         break;
 
                     case 'success':
                         message = {
-                            data:
-                                json.data.message +
+                            text:
+                                ModularityLoginFormObject.translation.welcome +
+                                ' ' +
+                                json.data.user.display_name +
+                                '<br>' +
                                 ModularityLoginFormObject.translation.prepareLogin,
                             style: {
                                 box: ['success', 'notice', 'notice-sm'],
@@ -63,8 +69,10 @@ export default class extends React.Component {
                             },
                         };
 
-                        this.apiMessage(message);
-                        let transfer = (location.href = decodeURIComponent(json.data.url));
+                        this.setState({ messageText: message });
+                        this.apiMessage();
+
+                        let transfer = (location.href = json.data.url.replace(/\\/g, ''));
                         setTimeout(() => transfer, 1000);
 
                         break;
@@ -78,20 +86,28 @@ export default class extends React.Component {
 
     /**
      * Creates Login Notice
-     * @param object
+     * @return void
      */
-    apiMessage(object) {
+    apiMessage() {
+        if (!document.getElementById('modularity-login-form-message')) {
+            const createMessageContainer = document.createElement('div');
+
+            createMessageContainer.setAttribute('id', 'modularity-login-form-message');
+            document.getElementById('modularity-login-form').appendChild(createMessageContainer);
+        }
+
         const messageContainer = document.getElementById('modularity-login-form-message');
-
-        messageContainer.removeAttribute('class');
-        messageContainer.classList.add(...object.style.box);
         messageContainer.innerHTML = '';
-        messageContainer.insertAdjacentHTML('afterbegin', '<i class="pricon"></i>');
+        messageContainer.removeAttribute('class');
 
-        let message = document.createTextNode(object.data);
+        const object = this.state.messageText;
+        messageContainer.classList.add(...object.style.box);
 
-        messageContainer.appendChild(message);
+        const createMessageContainerIcon = document.createElement('i');
+        createMessageContainerIcon.setAttribute('class', 'pricon');
+        messageContainer.appendChild(createMessageContainerIcon);
         messageContainer.firstChild.classList.add(object.style.icon);
+        messageContainer.insertAdjacentHTML('beforeend', object.text);
     }
 
     /**

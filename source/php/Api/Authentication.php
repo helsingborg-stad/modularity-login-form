@@ -91,10 +91,10 @@ class Authentication
             //Login successful
             if (!is_wp_error($result)) {
                 $page = str_replace('"', '', \ModularityLoginForm\App::decrypt($moduleId, $request->get_param('page')));
-                echo $page;
+
                 return array(
                     'message' => __('Login successful.', 'modularity-login-form'),
-                    'url' => urlencode($page),
+                    'url' => $page,
                     'state' => 'success',
                     'user' => array_filter(
                         (array)$result->data,

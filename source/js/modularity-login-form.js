@@ -18,7 +18,6 @@ const App = class {
 
         ReactDOM.render(
             <div>
-                <div id="modularity-login-form-message" />
                 <LoginForm />
             </div>,
             domElement
