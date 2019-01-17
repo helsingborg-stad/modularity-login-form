@@ -89,7 +89,7 @@ class LoginForm extends \Modularity\Module
             'username' => __('Username or E-mail', 'modularity-login-form'),
             'password' => __('Password', 'modularity-login-form'),
             'loginbtn' => __('Login', 'modularity-login-form'),
-            'timeout' => __('Please wait a bit, we preparing your login.', 'modularity-login-form'),
+            'prepareLogin' => __(' Please wait, while the system redirect you to your account.', 'modularity-login-form'),
         );
 
         //Send to script

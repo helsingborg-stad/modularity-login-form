@@ -14,12 +14,13 @@ export default class extends React.Component {
 
     /**
      * Send Login details to API
-     * @return void
+     * @return void || null
      */
     requestLogin() {
         this.setState({ isLoaded: false });
         const username = document.getElementById('authUsername').value;
         const password = document.getElementById('authPassword').value;
+
         axios
             .post(
                 '/wp-json/ModularityLoginForm/v1/Authentication/Login?token=' +
@@ -35,50 +36,62 @@ export default class extends React.Component {
             )
             .then(json => {
                 this.setState({ isLoaded: false });
-                document
-                    .getElementById('modularity-login-form-message')
-                    .removeAttribute('class');
+                let message;
+
                 switch (json.data.state) {
                     case 'error':
                         this.setState({ isLoaded: true });
-                        document.getElementById(
-                            'modularity-login-form-message'
-                        ).innerHTML =
-                            ' <i class="pricon pricon-notice-warning"></i>' +
-                            json.data.message;
-
-                        document
-                            .getElementById('modularity-login-form-message')
-                            .classList.add('danger', 'notice', 'notice-sm');
+                        message = {
+                            data: json.data.message,
+                            style: {
+                                box: ['danger', 'notice', 'notice-sm'],
+                                icon: 'pricon-notice-warning',
+                            },
+                        };
+                        this.apiMessage(message);
 
                         break;
 
                     case 'success':
-                        const timeout = ModularityLoginFormObject.timeout;
-                        setTimeout(timeout => {
-                            document.getElementById(
-                                'modularity-login-form-message'
-                            ).innerHTML =
-                                ' <i class="pricon pricon-check"></i>' +
-                                timeout;
+                        message = {
+                            data:
+                                json.data.message +
+                                ModularityLoginFormObject.translation.prepareLogin,
+                            style: {
+                                box: ['success', 'notice', 'notice-sm'],
+                                icon: 'pricon-enter',
+                            },
+                        };
 
-                            document
-                                .getElementById('modularity-login-form-message')
-                                .classList.add(
-                                    'success',
-                                    'notice',
-                                    'notice-sm'
-                                );
-                        }, 200);
+                        this.apiMessage(message);
+                        let transfer = (location.href = decodeURIComponent(json.data.url));
+                        setTimeout(() => transfer, 1000);
 
-                        location.href = json.data.url;
                         break;
 
                     default:
-                        console.log('Yawn, ZZzzzZZzzzZZzzzzzzzzzz!');
+                        return null;
                 }
             })
             .catch(error => 'error');
+    }
+
+    /**
+     * Creates Login Notice
+     * @param object
+     */
+    apiMessage(object) {
+        const messageContainer = document.getElementById('modularity-login-form-message');
+
+        messageContainer.removeAttribute('class');
+        messageContainer.classList.add(...object.style.box);
+        messageContainer.innerHTML = '';
+        messageContainer.insertAdjacentHTML('afterbegin', '<i class="pricon"></i>');
+
+        let message = document.createTextNode(object.data);
+
+        messageContainer.appendChild(message);
+        messageContainer.firstChild.classList.add(object.style.icon);
     }
 
     /**
@@ -96,7 +109,11 @@ export default class extends React.Component {
                 </div>
             </div>
         ) : (
-            <form>
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                }}
+            >
                 <div className="form-horizontal">
                     <div className="form-group">
                         <input
@@ -104,9 +121,13 @@ export default class extends React.Component {
                             name="authUsername"
                             id="authUsername"
                             autoComplete="username"
-                            placeholder={
-                                ModularityLoginFormObject.translation.username
-                            }
+                            placeholder={ModularityLoginFormObject.translation.username}
+                            onChange={ev => {
+                                ev.preventDefault();
+                                if (ev.keyCode == 13) {
+                                    return true;
+                                }
+                            }}
                             required
                         />
                     </div>
@@ -116,9 +137,13 @@ export default class extends React.Component {
                             name="authPassword"
                             id="authPassword"
                             autoComplete="current-password"
-                            placeholder={
-                                ModularityLoginFormObject.translation.password
-                            }
+                            placeholder={ModularityLoginFormObject.translation.password}
+                            onChange={ev => {
+                                ev.preventDefault();
+                                if (ev.keyCode == 13) {
+                                    return true;
+                                }
+                            }}
                             required
                         />
                     </div>
