@@ -31,7 +31,7 @@
             'label' => __('Api encryption salt', 'modularity-login-form'),
             'name' => 'mod_login_form_api_encryption_salt',
             'type' => 'text',
-            'instructions' => '',
+            'instructions' => __('Disabled. Salt is automatically generated when you save this setting.', 'modularity-login-form'),
             'required' => 1,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -40,7 +40,7 @@
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('Generates automaticly', 'modularity-login-form'),
+            'placeholder' => __('Generates automatically', 'modularity-login-form'),
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
@@ -51,7 +51,7 @@
             'label' => __('Api encryption key', 'modularity-login-form'),
             'name' => 'mod_login_form_api_encryption_key',
             'type' => 'text',
-            'instructions' => '',
+            'instructions' => __('Disabled. Key is automatically generated when you save this setting.', 'modularity-login-form'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -71,7 +71,7 @@
             'label' => __('Api token', 'modularity-login-form'),
             'name' => 'mod_login_form_api_token',
             'type' => 'text',
-            'instructions' => '',
+            'instructions' => __('Disabled. Key is automatically generated when you save this setting.', 'modularity-login-form'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(

@@ -26,7 +26,7 @@
             "label": "Api encryption salt",
             "name": "mod_login_form_api_encryption_salt",
             "type": "text",
-            "instructions": "",
+            "instructions": "Disabled. Salt is automatically generated when you save this setting.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -35,7 +35,7 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "Generates automaticly",
+            "placeholder": "Generates automatically",
             "prepend": "",
             "append": "",
             "maxlength": "",
@@ -46,7 +46,7 @@
             "label": "Api encryption key",
             "name": "mod_login_form_api_encryption_key",
             "type": "text",
-            "instructions": "",
+            "instructions": "Disabled. Key is automatically generated when you save this setting.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -66,7 +66,7 @@
             "label": "Api token",
             "name": "mod_login_form_api_token",
             "type": "text",
-            "instructions": "",
+            "instructions": "Disabled. Key is automatically generated when you save this setting.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
