@@ -4,8 +4,8 @@
  * Plugin Name:       Modularity Login Form
  * Plugin URI:        https://github.com/helsingborg-stad/modularity-login-form
  * Description:       Front End login form
- * Version:           0.0.1
- * Author:            Johan Silvergrund
+ * Version:           1.0.0
+ * Author:            Johan Silvergrund && Sebastian Thulin
  * Author URI:        https://helsingborg.se
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
