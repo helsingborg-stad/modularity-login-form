@@ -2,12 +2,19 @@
 
 namespace ModularityLoginForm\Module;
 
+/**
+ * Class LoginForm
+ * @package ModularityLoginForm\Module
+ */
 class LoginForm extends \Modularity\Module
 {
     public $slug = 'LoginForm';
     public $supports = array();
     public $react = false;
 
+    /**
+     * Init
+     */
     public function init()
     {
         $this->nameSingular = __("Login form", 'modularity-login-form');
