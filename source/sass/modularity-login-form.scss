@@ -1,24 +1,30 @@
-#modularity-login-form {
-    #modularity-login-form-message {
-        max-width:486px;
-        width:100%;
-        padding:10px 15px;
-        margin-bottom:10px;
-        &.success {
-            margin: 0 auto;
-            max-width:300px;
-        }
-    }
-    .form-group {
-        min-height:62px;
+.modularity-mod-loginform {
+    
+    #modularity-login-form {
+        #modularity-login-form-message {
+            max-width: 486px;
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 10px;
 
-    }
-    @media only screen and (max-width: 580px) {
+            &.success {
+                margin: 0 auto;
+                max-width: 300px;
+            }
+        }
+
         .form-group {
-            margin-left:0px;
-            width:100%;
-            max-width:100%;
+            min-height: 62px;
+
         }
 
+        @media only screen and (max-width: 580px) {
+            .form-group {
+                margin-left: 0px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+        }
     }
 }

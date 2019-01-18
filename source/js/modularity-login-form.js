@@ -8,17 +8,23 @@ const App = class {
         this.renderModule();
     }
 
+    /**
+     * Render Module
+     */
     renderModule() {
-        if (
-            typeof ModularityLoginFormObject.token === 'undefined' ||
-            ModularityLoginFormObject.token === ''
-        ) {
+        const { token, moduleId, page, translation } = ModularityLoginFormObject;
+        if (typeof token === 'undefined' || token === '') {
             return;
         }
 
         ReactDOM.render(
             <div>
-                <LoginForm />
+                <LoginForm
+                    moduleId={Number(moduleId)}
+                    page={page}
+                    token={token}
+                    translation={translation}
+                />
             </div>,
             domElement
         );

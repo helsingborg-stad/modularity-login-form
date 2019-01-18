@@ -1,6 +1,19 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import Notice from '../Helpers/Notice';
 
-export default class extends React.Component {
+export default class LoginForm extends React.Component {
+    /**
+     *
+     * @type {{translation: shim, page: shim, moduleId: shim, token: shim}}
+     */
+    static propTypes = {
+        moduleId: PropTypes.number,
+        page: PropTypes.string,
+        token: PropTypes.string,
+        translation: PropTypes.objectOf(PropTypes.string),
+    };
+
     /**
      * Init
      * @return void
@@ -9,7 +22,6 @@ export default class extends React.Component {
         super();
         this.state = {
             isLoaded: true,
-            message: null,
         };
     }
 
@@ -21,28 +33,38 @@ export default class extends React.Component {
         this.setState({ isLoaded: false });
         const username = document.getElementById('authUsername').value;
         const password = document.getElementById('authPassword').value;
+        const element = document.getElementById('modularity-login-form-message');
+        const { moduleId, page, token, translation } = this.props;
+
+        if (element) {
+            document.getElementById('modularity-login-form-message').classList.add('hidden');
+        }
 
         axios
             .post(
                 '/wp-json/ModularityLoginForm/v1/Authentication/Login?token=' +
-                    ModularityLoginFormObject.token +
+                    token +
                     '&moduleId=' +
-                    ModularityLoginFormObject.moduleId +
+                    moduleId +
                     '&username=' +
                     username +
                     '&password=' +
                     password +
                     '&page=' +
-                    ModularityLoginFormObject.page
+                    page
             )
             .then(json => {
                 this.setState({ isLoaded: false });
-                let message;
+                let { message, transfer } = '';
 
                 switch (json.data.state) {
                     case 'error':
                         this.setState({ isLoaded: true });
                         message = {
+                            container: {
+                                parent: 'modularity-login-form',
+                                child: 'modularity-login-form-message',
+                            },
                             text: json.data.message,
                             style: {
                                 box: ['danger', 'notice', 'notice-sm'],
@@ -50,64 +72,39 @@ export default class extends React.Component {
                             },
                         };
 
-                        this.setState({ message: message });
-                        this.apiMessage();
-
+                        Notice.showNotice(message);
                         break;
 
                     case 'success':
                         message = {
+                            container: {
+                                parent: 'modularity-login-form',
+                                child: 'modularity-login-form-message',
+                            },
                             text:
-                                ModularityLoginFormObject.translation.welcome +
+                                translation.welcome +
                                 ' ' +
                                 json.data.user.display_name +
                                 '<br>' +
-                                ModularityLoginFormObject.translation.prepareLogin,
+                                translation.prepareLogin,
                             style: {
                                 box: ['success', 'notice', 'notice-sm'],
                                 icon: 'pricon-enter',
                             },
                         };
 
-                        this.setState({ message: message });
-                        this.apiMessage();
-
-                        let transfer = (location.href = json.data.url.replace(/\\/g, ''));
-                        setTimeout(() => transfer, 1000);
+                        Notice.showNotice(message);
+                        transfer = json.data.url.replace(/\\/g, '');
+                        setTimeout(() => window.location.replace(transfer), 1000);
 
                         break;
 
                     default:
                         return null;
                 }
+                element.classList.remove('hidden');
             })
             .catch(error => 'error');
-    }
-
-    /**
-     * Creates Login Notice
-     * @return void
-     */
-    apiMessage() {
-        if (!document.getElementById('modularity-login-form-message')) {
-            const createMessageContainer = document.createElement('div');
-
-            createMessageContainer.setAttribute('id', 'modularity-login-form-message');
-            document.getElementById('modularity-login-form').appendChild(createMessageContainer);
-        }
-
-        const messageContainer = document.getElementById('modularity-login-form-message');
-        messageContainer.innerHTML = '';
-        messageContainer.removeAttribute('class');
-
-        const object = this.state.message;
-        messageContainer.classList.add(...object.style.box);
-
-        const createMessageContainerIcon = document.createElement('i');
-        createMessageContainerIcon.setAttribute('class', 'pricon');
-        messageContainer.appendChild(createMessageContainerIcon);
-        messageContainer.firstChild.classList.add(object.style.icon);
-        messageContainer.insertAdjacentHTML('beforeend', object.text);
     }
 
     /**
@@ -115,7 +112,9 @@ export default class extends React.Component {
      * @return Render to javaScript
      */
     render() {
-        return !this.state.isLoaded ? (
+        const { translation } = this.props;
+        const { isLoaded } = this.state;
+        return !isLoaded ? (
             <div className="gutter">
                 <div className="loading">
                     <div />
@@ -137,10 +136,10 @@ export default class extends React.Component {
                             name="authUsername"
                             id="authUsername"
                             autoComplete="username"
-                            placeholder={ModularityLoginFormObject.translation.username}
+                            placeholder={translation.username}
                             onChange={ev => {
                                 ev.preventDefault();
-                                if (ev.keyCode == 13) {
+                                if (ev.keyCode === 13) {
                                     return true;
                                 }
                             }}
@@ -153,10 +152,10 @@ export default class extends React.Component {
                             name="authPassword"
                             id="authPassword"
                             autoComplete="current-password"
-                            placeholder={ModularityLoginFormObject.translation.password}
+                            placeholder={translation.password}
                             onChange={ev => {
                                 ev.preventDefault();
-                                if (ev.keyCode == 13) {
+                                if (ev.keyCode === 13) {
                                     return true;
                                 }
                             }}
@@ -172,7 +171,7 @@ export default class extends React.Component {
                                 this.requestLogin();
                             }}
                         >
-                            {ModularityLoginFormObject.translation.loginbtn}
+                            {translation.loginbtn}
                         </button>
                     </div>
                 </div>
