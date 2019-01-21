@@ -36,8 +36,8 @@ export default class LoginForm extends React.Component {
         const { moduleId, page, token, translation } = this.props;
         let username = null;
         let password = null;
-        let type;
-        let loginVars = '';
+        let type = null;
+        let loginVars = null;
 
         if (element) {
             document.getElementById('modularity-login-form-message').classList.add('hidden');
@@ -89,9 +89,7 @@ export default class LoginForm extends React.Component {
                         break;
 
                     case 'success':
-                        console.log('success');
-
-                        if (document.body.classList.contains('logged-in')) {
+                        if (loginVars !== null) {
                             message = {
                                 container: {
                                     parent: 'modularity-login-form',
@@ -126,7 +124,7 @@ export default class LoginForm extends React.Component {
                         Notice.showNotice(message);
                         transfer = json.data.url.replace(/\\/g, '');
                         console.log(transfer);
-                        setTimeout(() => window.location.replace(transfer), 1000);
+                        setTimeout(() => window.location.replace(transfer), 600);
 
                         break;
 
@@ -233,10 +231,10 @@ export default class LoginForm extends React.Component {
                         </div>
                     </form>
                 ) : (
-                    <div className="form-group">
+                    <div className={hideLogout + ' form-group'}>
                         <button
                             type="button"
-                            className={hideLogout + ' btn btn-primary'}
+                            className="btn btn-primary"
                             onClick={ev => {
                                 ev.preventDefault();
                                 this.requestLogin();

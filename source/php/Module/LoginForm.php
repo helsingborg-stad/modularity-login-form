@@ -98,7 +98,7 @@ class LoginForm extends \Modularity\Module
             'loginbtn' => __('Login', 'modularity-login-form'),
             'logoutbtn' => __('Logout', 'modularity-login-form'),
             'welcome' => __('Welcome', 'modularity-login-form'),
-            'prepareLogout' => __(' Please wait, your logging out from the system.', 'modularity-login-form'),
+            'prepareLogout' => __(' Please wait, logging out from the system.', 'modularity-login-form'),
             'prepareLogin' => __(' Please wait, while the system redirect you to your account.', 'modularity-login-form'),
         );
 
