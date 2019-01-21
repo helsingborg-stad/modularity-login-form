@@ -31,28 +31,41 @@ export default class LoginForm extends React.Component {
      */
     requestLogin() {
         this.setState({ isLoaded: false });
-        const username = document.getElementById('authUsername').value;
-        const password = document.getElementById('authPassword').value;
+
         const element = document.getElementById('modularity-login-form-message');
         const { moduleId, page, token, translation } = this.props;
+        let username = null;
+        let password = null;
+        let type;
+        let loginVars = '';
 
         if (element) {
             document.getElementById('modularity-login-form-message').classList.add('hidden');
         }
 
+        if (document.body.classList.contains('logged-in')) {
+            type = 'Logout';
+            document.body.classList.remove('logged-in');
+        } else {
+            username = document.getElementById('authUsername').value;
+            password = document.getElementById('authPassword').value;
+            type = 'Login';
+            loginVars = '&username=' + username + '&password=' + password;
+        }
+
+        const apiUrl =
+            '/wp-json/ModularityLoginForm/v1/Authentication/' +
+            type +
+            '?token=' +
+            token +
+            '&moduleId=' +
+            moduleId +
+            '&page=' +
+            page +
+            loginVars;
+
         axios
-            .post(
-                '/wp-json/ModularityLoginForm/v1/Authentication/Login?token=' +
-                    token +
-                    '&moduleId=' +
-                    moduleId +
-                    '&username=' +
-                    username +
-                    '&password=' +
-                    password +
-                    '&page=' +
-                    page
-            )
+            .post(apiUrl)
             .then(json => {
                 this.setState({ isLoaded: false });
                 let { message, transfer } = '';
@@ -76,25 +89,43 @@ export default class LoginForm extends React.Component {
                         break;
 
                     case 'success':
-                        message = {
-                            container: {
-                                parent: 'modularity-login-form',
-                                child: 'modularity-login-form-message',
-                            },
-                            text:
-                                translation.welcome +
-                                ' ' +
-                                json.data.user.display_name +
-                                '<br>' +
-                                translation.prepareLogin,
-                            style: {
-                                box: ['success', 'notice', 'notice-sm'],
-                                icon: 'pricon-enter',
-                            },
-                        };
+                        console.log('success');
 
+                        if (document.body.classList.contains('logged-in')) {
+                            message = {
+                                container: {
+                                    parent: 'modularity-login-form',
+                                    child: 'modularity-login-form-message',
+                                },
+                                text:
+                                    translation.welcome +
+                                    ' ' +
+                                    json.data.user.display_name +
+                                    '<br>' +
+                                    translation.prepareLogin,
+                                style: {
+                                    box: ['success', 'notice', 'notice-sm'],
+                                    icon: 'pricon-enter',
+                                },
+                            };
+                        } else {
+                            message = {
+                                container: {
+                                    parent: 'modularity-login-form',
+                                    child: 'modularity-login-form-message',
+                                },
+                                text: translation.prepareLogout,
+                                style: {
+                                    box: ['success', 'notice', 'notice-sm'],
+                                    icon: 'pricon-enter',
+                                },
+                            };
+                        }
+
+                        console.log('EDWARD');
                         Notice.showNotice(message);
                         transfer = json.data.url.replace(/\\/g, '');
+                        console.log(transfer);
                         setTimeout(() => window.location.replace(transfer), 1000);
 
                         break;
@@ -108,74 +139,114 @@ export default class LoginForm extends React.Component {
     }
 
     /**
+     * Submit the login form
+     * @returns {boolean}
+     */
+    handleSubmit() {
+        const username = document.getElementById('authUsername').value;
+        const password = document.getElementById('authPassword').value;
+        if (username && password) {
+            this.requestLogin();
+        }
+        return false;
+    }
+
+    /**
      * Render jsx
      * @return Render to javaScript
      */
     render() {
         const { translation } = this.props;
         const { isLoaded } = this.state;
-        return !isLoaded ? (
-            <div className="gutter">
-                <div className="loading">
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                </div>
-            </div>
-        ) : (
-            <form
-                onSubmit={e => {
-                    e.preventDefault();
-                }}
-            >
-                <div className="form-horizontal">
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            name="authUsername"
-                            id="authUsername"
-                            autoComplete="username"
-                            placeholder={translation.username}
-                            onChange={ev => {
-                                ev.preventDefault();
-                                if (ev.keyCode === 13) {
-                                    return true;
-                                }
-                            }}
-                            required
-                        />
+        const hideLogout = !isLoaded ? 'hidden' : '';
+
+        return (
+            <div>
+                {!isLoaded ? (
+                    <div className="gutter">
+                        <div className="loading">
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <input
-                            type="password"
-                            name="authPassword"
-                            id="authPassword"
-                            autoComplete="current-password"
-                            placeholder={translation.password}
-                            onChange={ev => {
-                                ev.preventDefault();
-                                if (ev.keyCode === 13) {
-                                    return true;
-                                }
-                            }}
-                            required
-                        />
-                    </div>
+                ) : null}
+
+                {isLoaded && document.body.classList.contains('logged-in') !== true ? (
+                    <form
+                        onSubmit={e => {
+                            e.preventDefault();
+                        }}
+                    >
+                        <div className="form-horizontal">
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    name="authUsername"
+                                    id="authUsername"
+                                    autoComplete="username"
+                                    placeholder={translation.username}
+                                    onChange={ev => {
+                                        ev.preventDefault();
+                                    }}
+                                    onKeyPress={event => {
+                                        if (event.which === 13 || event.keyCode === 13) {
+                                            this.handleSubmit();
+                                            return false;
+                                        }
+                                    }}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="password"
+                                    name="authPassword"
+                                    id="authPassword"
+                                    autoComplete="current-password"
+                                    placeholder={translation.password}
+                                    onChange={ev => {
+                                        ev.preventDefault();
+                                    }}
+                                    onKeyPress={event => {
+                                        if (event.which === 13 || event.keyCode === 13) {
+                                            this.handleSubmit();
+                                            return false;
+                                        }
+                                    }}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={ev => {
+                                        ev.preventDefault();
+                                        this.requestLogin();
+                                    }}
+                                >
+                                    {translation.loginbtn}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                ) : (
                     <div className="form-group">
                         <button
                             type="button"
-                            className="btn btn-primary"
+                            className={hideLogout + ' btn btn-primary'}
                             onClick={ev => {
                                 ev.preventDefault();
                                 this.requestLogin();
                             }}
                         >
-                            {translation.loginbtn}
+                            {translation.logoutbtn}
                         </button>
                     </div>
-                </div>
-            </form>
+                )}
+            </div>
         );
     }
 }

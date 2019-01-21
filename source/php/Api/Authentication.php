@@ -45,7 +45,7 @@ class Authentication
             "ModularityLoginForm/v1",
             "Authentication/Logout",
             array(
-                'methods' => \WP_REST_Server::READABLE,
+                'methods' => \WP_REST_Server::ALLMETHODS,
                 'callback' => array($this, 'logout')
             )
         );
@@ -139,11 +139,29 @@ class Authentication
      */
     public function logout($request)
     {
+        $moduleId = (int)$request->get_param('moduleId');
+        $authToken = str_replace('"', '', \ModularityLoginForm\App::decrypt($moduleId, $request->get_param('token')));
+        $moduleToken = get_field_object('mod_login_form_api_token', $moduleId);
+
+        //No valid auth token
+        if ($authToken != $moduleToken['value']) {
+            return wp_send_json(
+                array(
+                    'state' => 'error',
+                    'message' => __("Token error!!!! Please provide one in the modularity login form settings.",
+                        'modularity-login-form')
+                )
+            );
+        }
+
         wp_logout();
         return array(
             'message' => __('You have now logged out.', 'modularity-login-form'),
+            'url' => str_replace('"', '',
+                \ModularityLoginForm\App::decrypt($moduleId, $request->get_param('page'))),
             'state' => 'success'
         );
     }
+
 
 }
