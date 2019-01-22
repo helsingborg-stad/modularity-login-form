@@ -95,6 +95,7 @@ class LoginForm extends \Modularity\Module
             'title' => __('Modularity Login Form', 'modularity-login-form'),
             'username' => __('Username or E-mail', 'modularity-login-form'),
             'password' => __('Password', 'modularity-login-form'),
+            'forgotpasswd' => __('Forgot password?', 'modularity-login-form'),
             'loginbtn' => __('Login', 'modularity-login-form'),
             'logoutbtn' => __('Logout', 'modularity-login-form'),
             'welcome' => __('Welcome', 'modularity-login-form'),

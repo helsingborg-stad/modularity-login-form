@@ -168,7 +168,6 @@ export default class LoginForm extends React.Component {
                         </div>
                     </div>
                 ) : null}
-
                 {isLoaded && document.body.classList.contains('logged-in') !== true ? (
                     <form
                         onSubmit={e => {
@@ -213,6 +212,12 @@ export default class LoginForm extends React.Component {
                                     }}
                                     required
                                 />
+                                <a
+                                    className="forgott-password"
+                                    href="/wp-login.php?action=lostpassword"
+                                >
+                                    {translation.forgotpasswd}
+                                </a>
                             </div>
                             <div className="form-group grid-md-2">
                                 <button

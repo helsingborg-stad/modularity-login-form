@@ -7,27 +7,47 @@
             padding: 10px 15px;
             margin-bottom: 10px;
 
-            &.success, &.info {
+            &.success, &.info, &.danger {
                 margin: 0 auto;
-                max-width: 300px;
+                max-width: 450px;
+                margin-top:10px;
             }
         }
 
         .form-group {
-            min-height: 62px;
+            position:relative;
             margin:0px;
             input {
                 width:100%;
             }
-        }
-
-        @media only screen and (max-width: 580px) {
-            .form-group {
+            @media only screen and (max-width: 895px) {
                 margin-left: 0px;
                 width: 100%;
                 max-width: 100%;
+                input {
+                    margin-bottom: 10px;
+                }
             }
-
+            a {
+                position: absolute;
+                right: 16px;
+                bottom: -28px;
+                font-size:14px;
+                @media only screen and (max-width: 320px) {
+                    position:relative;
+                    bottom: auto;
+                    right: 0px;
+                    float:right;
+                }
+            }
         }
+        .form-notice {
+            position: absolute;
+            @media only screen and (max-width: 895px) {
+                position:relative;
+                padding-bottom: 10px;
+            }
+        }
+
     }
 }
