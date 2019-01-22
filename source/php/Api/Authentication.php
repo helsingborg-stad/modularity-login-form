@@ -89,7 +89,12 @@ class Authentication
             );
 
             //Custom validation on login
-            if($message = apply_filters('modularityLoginForm/Login', false, $result)){
+            if($message = apply_filters('modularityLoginForm/AbortLogin', false, $result)){
+                
+                //Do logout
+                wp_logout();
+
+                //Return custom error message 
                 return array(
                     'message' => $message,
                     'state' => 'error'
