@@ -155,7 +155,7 @@ export default class LoginForm extends React.Component {
     render() {
         const { translation, fullUsername } = this.props;
         const { isLoaded } = this.state;
-        const hideLogout = !isLoaded ? 'hidden' : '';
+        const hideMarkup = !isLoaded ? 'hidden' : '';
 
         return (
             <div>
@@ -235,11 +235,11 @@ export default class LoginForm extends React.Component {
                         </div>
                     </form>
                 ) : (
-                    <div className="grid user-logged-in">
+                    <div className={'grid user-logged-in ' + hideMarkup + ' ha'}>
                         <div className="user-data">
                             <h5>{translation.loggedIn + ' ' + fullUsername}</h5>
                         </div>
-                        <div className={hideLogout + ' form-group'}>
+                        <div className="form-group">
                             <button
                                 type="button"
                                 className="btn btn-primary"
