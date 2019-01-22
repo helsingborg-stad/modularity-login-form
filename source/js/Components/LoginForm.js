@@ -12,6 +12,7 @@ export default class LoginForm extends React.Component {
         page: PropTypes.string,
         token: PropTypes.string,
         translation: PropTypes.objectOf(PropTypes.string),
+        fullUsername: PropTypes.string,
     };
 
     /**
@@ -152,7 +153,7 @@ export default class LoginForm extends React.Component {
      * @return Render to javaScript
      */
     render() {
-        const { translation } = this.props;
+        const { translation, fullUsername } = this.props;
         const { isLoaded } = this.state;
         const hideLogout = !isLoaded ? 'hidden' : '';
 
@@ -234,17 +235,22 @@ export default class LoginForm extends React.Component {
                         </div>
                     </form>
                 ) : (
-                    <div className={hideLogout + ' form-group'}>
-                        <button
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={ev => {
-                                ev.preventDefault();
-                                this.requestLogin();
-                            }}
-                        >
-                            {translation.logoutbtn}
-                        </button>
+                    <div className="grid">
+                        <div className={hideLogout + ' form-group grid-md-3'}>
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={ev => {
+                                    ev.preventDefault();
+                                    this.requestLogin();
+                                }}
+                            >
+                                {translation.logoutbtn}
+                            </button>
+                        </div>
+                        <div className="grid-md-9 hidden user-data">
+                            <h3>{translation.welcome + ' ' + fullUsername}</h3>
+                        </div>
                     </div>
                 )}
             </div>

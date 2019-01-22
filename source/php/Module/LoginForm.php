@@ -90,12 +90,23 @@ class LoginForm extends \Modularity\Module
         $data['token'] = \ModularityLoginForm\App::encrypt($this->data, $token['value']);
         $data['page'] = \ModularityLoginForm\App::encrypt($this->data, $page['value']);
 
+        if ( is_user_logged_in() ) {
+            $currentUser = wp_get_current_user();
+            if ($currentUser->user_firstname && $currentUser->user_lastname){
+                $data['fullusername'] = $currentUser->user_firstname . " " . $currentUser->user_lastname;
+            } else {
+                $data['fullusername'] = $currentUser->display_name;
+            }
+
+        }
+
         //Translation strings
         $data['translation'] = array(
             'title' => __('Modularity Login Form', 'modularity-login-form'),
             'username' => __('Username or E-mail', 'modularity-login-form'),
             'password' => __('Password', 'modularity-login-form'),
             'forgotpasswd' => __('Forgot password?', 'modularity-login-form'),
+            'loggedIn' => __('You are logged in as: ', 'modularity-login-form'),
             'loginbtn' => __('Login', 'modularity-login-form'),
             'logoutbtn' => __('Logout', 'modularity-login-form'),
             'welcome' => __('Welcome', 'modularity-login-form'),

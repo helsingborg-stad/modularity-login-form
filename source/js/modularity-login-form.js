@@ -12,7 +12,7 @@ const App = class {
      * Render Module
      */
     renderModule() {
-        const { token, moduleId, page, translation } = ModularityLoginFormObject;
+        const { token, moduleId, page, translation, fullusername } = ModularityLoginFormObject;
         if (typeof token === 'undefined' || token === '') {
             return;
         }
@@ -24,6 +24,7 @@ const App = class {
                     page={page}
                     token={token}
                     translation={translation}
+                    fullUsername={fullusername}
                 />
             </div>,
             domElement
