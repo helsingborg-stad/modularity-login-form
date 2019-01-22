@@ -88,6 +88,14 @@ class Authentication
                 )
             );
 
+            //Custom validation on login
+            if($message = apply_filters('modularityLoginForm/Login', false, $result)){
+                return array(
+                    'message' => $message,
+                    'state' => 'error'
+                );
+            }
+
             //Login successful
             if (!is_wp_error($result)) {
                 $page = str_replace('"', '', \ModularityLoginForm\App::decrypt($moduleId, $request->get_param('page')));
