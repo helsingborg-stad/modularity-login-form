@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Modularity Login Form\n"
-"POT-Creation-Date: 2019-01-22 11:20+0100\n"
-"PO-Revision-Date: 2019-01-22 11:20+0100\n"
+"POT-Creation-Date: 2019-01-22 13:38+0100\n"
+"PO-Revision-Date: 2019-01-22 13:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #. Plugin Name of the plugin/theme
 #: acf-fields/php/modularity-form-login.php:6
-#: source/php/Module/LoginForm.php:95
+#: source/php/Module/LoginForm.php:105
 msgid "Modularity Login Form"
 msgstr "Modularity inloggningsformulär"
 
@@ -109,35 +109,39 @@ msgstr "Inloggningsformulär"
 msgid "Front end login"
 msgstr ""
 
-#: source/php/Module/LoginForm.php:96
+#: source/php/Module/LoginForm.php:106
 msgid "Username or E-mail"
 msgstr "Användarnamn / E-post"
 
-#: source/php/Module/LoginForm.php:97
+#: source/php/Module/LoginForm.php:107
 msgid "Password"
 msgstr "Lösenord"
 
-#: source/php/Module/LoginForm.php:98
+#: source/php/Module/LoginForm.php:108
 msgid "Forgot password?"
 msgstr "Glömt lösenord?"
 
-#: source/php/Module/LoginForm.php:99
+#: source/php/Module/LoginForm.php:109
+msgid "You are logged in as: "
+msgstr "Du är inloggad som "
+
+#: source/php/Module/LoginForm.php:110
 msgid "Login"
 msgstr "Logga in"
 
-#: source/php/Module/LoginForm.php:100
+#: source/php/Module/LoginForm.php:111
 msgid "Logout"
 msgstr "Logga ut"
 
-#: source/php/Module/LoginForm.php:101
+#: source/php/Module/LoginForm.php:112
 msgid "Welcome"
 msgstr "Välkommen"
 
-#: source/php/Module/LoginForm.php:102
+#: source/php/Module/LoginForm.php:113
 msgid " Please wait, logging out from the system."
 msgstr "Vänligen vänta, loggar ut från systemet."
 
-#: source/php/Module/LoginForm.php:103
+#: source/php/Module/LoginForm.php:114
 msgid " Please wait, while the system redirect you to your account."
 msgstr "Vänligen vänta, medan systemet omdirigerar dig till ditt konto."
 

@@ -235,8 +235,11 @@ export default class LoginForm extends React.Component {
                         </div>
                     </form>
                 ) : (
-                    <div className="grid">
-                        <div className={hideLogout + ' form-group grid-md-3'}>
+                    <div className="grid user-logged-in">
+                        <div className="user-data">
+                            <h5>{translation.loggedIn + ' ' + fullUsername}</h5>
+                        </div>
+                        <div className={hideLogout + ' form-group'}>
                             <button
                                 type="button"
                                 className="btn btn-primary"
@@ -247,9 +250,6 @@ export default class LoginForm extends React.Component {
                             >
                                 {translation.logoutbtn}
                             </button>
-                        </div>
-                        <div className="grid-md-9 hidden user-data">
-                            <h3>{translation.welcome + ' ' + fullUsername}</h3>
                         </div>
                     </div>
                 )}

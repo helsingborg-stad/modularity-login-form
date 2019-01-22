@@ -48,6 +48,18 @@
                 padding-bottom: 10px;
             }
         }
+        .user-logged-in {
+            margin: 0 auto;
+            text-align:center;
+            .user-data {
+                margin-top: -15px;
+                margin-bottom: 10px;
+            }
+            button {
+                max-width: 300px;
+                width: 100%;
+            }
 
+        }
     }
 }
