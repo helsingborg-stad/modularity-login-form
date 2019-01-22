@@ -75,12 +75,12 @@ export default class LoginForm extends React.Component {
                         this.setState({ isLoaded: true });
                         message = {
                             container: {
-                                parent: 'modularity-login-form',
+                                parent: 'login-box',
                                 child: 'modularity-login-form-message',
                             },
                             text: json.data.message,
                             style: {
-                                box: ['danger', 'notice', 'notice-sm'],
+                                box: ['danger', 'notice'],
                                 icon: 'pricon-notice-warning',
                             },
                         };
@@ -92,7 +92,7 @@ export default class LoginForm extends React.Component {
                         if (loginVars !== null) {
                             message = {
                                 container: {
-                                    parent: 'modularity-login-form',
+                                    parent: 'login-box',
                                     child: 'modularity-login-form-message',
                                 },
                                 text:
@@ -102,7 +102,7 @@ export default class LoginForm extends React.Component {
                                     '<br>' +
                                     translation.prepareLogin,
                                 style: {
-                                    box: ['success', 'notice', 'notice-sm'],
+                                    box: ['success', 'notice'],
                                     icon: 'pricon-enter',
                                 },
                             };
@@ -114,7 +114,7 @@ export default class LoginForm extends React.Component {
                                 },
                                 text: translation.prepareLogout,
                                 style: {
-                                    box: ['info', 'notice', 'notice-sm'],
+                                    box: ['info', 'notice'],
                                     icon: 'pricon-standby',
                                 },
                             };

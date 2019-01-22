@@ -7,7 +7,7 @@ const createNotice = message => {
         const createMessageContainer = document.createElement('div');
 
         createMessageContainer.setAttribute('id', message.container.child);
-        document.getElementById(message.container.parent).appendChild(createMessageContainer);
+        document.getElementById(message.container.parent).prepend(createMessageContainer);
     }
 
     const messageContainer = document.getElementById(message.container.child);
