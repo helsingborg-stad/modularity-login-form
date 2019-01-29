@@ -16,6 +16,7 @@ class App
         add_filter('acf/save_post', array($this, 'generateKeys'), 1 );
     }
 
+
     /**
      * Disable Fields in Settings
      *

@@ -76,7 +76,7 @@ export default class LoginForm extends React.Component {
                         this.setState({ isLoaded: true });
                         message = {
                             container: {
-                                parent: 'login-box',
+                                parent: 'modularity-login-form',
                                 child: 'modularity-login-form-message',
                             },
                             text: json.data.message,
@@ -93,7 +93,7 @@ export default class LoginForm extends React.Component {
                         if (loginVars !== null) {
                             message = {
                                 container: {
-                                    parent: 'login-box',
+                                    parent: 'modularity-login-form',
                                     child: 'modularity-login-form-message',
                                 },
                                 text:
