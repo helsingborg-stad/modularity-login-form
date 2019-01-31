@@ -1,8 +1,6 @@
 import '@babel/polyfill/noConflict';
 import LoginForm from './Components/LoginForm.js';
 
-const domElement = document.getElementById('modularity-login-form');
-
 const App = class {
     constructor() {
         this.renderModule();
@@ -12,23 +10,28 @@ const App = class {
      * Render Module
      */
     renderModule() {
-        const { token, moduleId, page, translation, fullusername } = ModularityLoginFormObject;
-        if (typeof token === 'undefined' || token === '') {
-            return;
-        }
+        const domElements = document.getElementsByClassName('modularity-login-form-react');
+        for (let i = 0; i < domElements.length; i++) {
+            const element = domElements[i];
 
-        ReactDOM.render(
-            <div>
+            console.log(element); 
+
+            const { token, moduleId, page, translation, fullusername } = ModularityLoginFormObject;
+            if (typeof token === 'undefined' || token === '') {
+                return;
+            }
+
+            ReactDOM.render(
                 <LoginForm
                     moduleId={Number(moduleId)}
                     page={page}
                     token={token}
                     translation={translation}
                     fullUsername={fullusername}
-                />
-            </div>,
-            domElement
-        );
+                />,
+                element
+            );
+        }
     }
 };
 new App();
