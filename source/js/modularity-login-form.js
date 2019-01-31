@@ -14,8 +14,6 @@ const App = class {
         for (let i = 0; i < domElements.length; i++) {
             const element = domElements[i];
 
-            console.log(element); 
-
             const { token, moduleId, page, translation, fullusername } = ModularityLoginFormObject;
             if (typeof token === 'undefined' || token === '') {
                 return;
