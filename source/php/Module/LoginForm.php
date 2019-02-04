@@ -52,7 +52,7 @@ class LoginForm extends \Modularity\Module
      */
     public function registerScripts()
     {
-        wp_register_script('modularity-login-form-js', MODULARITYLOGINFORM_URL . '/dist/' . \ModularityLoginForm\Helper\CacheBust::name('js/modularity-login-form.js'), array('react', 'react-dom'));
+        wp_register_script('modularity-login-form-js', MODULARITYLOGINFORM_URL . '/dist/' . \ModularityLoginForm\Helper\CacheBust::name('js/modularity-login-form.js'), array('react', 'react-dom'), false, true);
     }
 
     /**
