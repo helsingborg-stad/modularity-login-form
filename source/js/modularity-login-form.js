@@ -13,8 +13,13 @@ const App = class {
         const domElements = document.getElementsByClassName('modularity-login-form-react');
         for (let i = 0; i < domElements.length; i++) {
             const element = domElements[i];
+            const dataAttributes = JSON.parse(element.getAttribute('data-login-form'));
 
-            const { token, moduleId, page, translation, fullusername } = ModularityLoginFormObject;
+            const {translation} = ModularityLoginFormObject;
+
+            const { token, moduleId, page, fullusername, restUrl } = dataAttributes;
+
+
             if (typeof token === 'undefined' || token === '') {
                 return;
             }
@@ -26,6 +31,7 @@ const App = class {
                     token={token}
                     translation={translation}
                     fullUsername={fullusername}
+                    restUrl={restUrl}
                 />,
                 element
             );

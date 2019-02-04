@@ -34,7 +34,8 @@ export default class LoginForm extends React.Component {
         this.setState({ isLoaded: false });
 
         const element = document.getElementById('modularity-login-form-message');
-        const { moduleId, page, token, translation } = this.props;
+
+        const { moduleId, page, token, translation, restUrl } = this.props;
         let username = null;
         let password = null;
         let type = null;
@@ -55,7 +56,7 @@ export default class LoginForm extends React.Component {
         }
 
         const apiUrl =
-            '/wp-json/ModularityLoginForm/v1/Authentication/' +
+            'ModularityLoginForm/v1/Authentication/' +
             type +
             '?token=' +
             token +
@@ -66,7 +67,7 @@ export default class LoginForm extends React.Component {
             loginVars;
 
         axios
-            .post(apiUrl)
+            .post(restUrl + apiUrl)
             .then(json => {
                 this.setState({ isLoaded: false });
                 let { message, transfer } = '';
