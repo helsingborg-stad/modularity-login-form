@@ -68,7 +68,7 @@ class LoginForm extends \Modularity\Module
             return;
         }
 
-        (!class_exists('\Modularity\Helper\React')) ? \Modularity\Helper\React::enqueue() : \ModularityLoginForm\Helper\React::enqueue();
+        (class_exists('\Modularity\Helper\React')) ? \Modularity\Helper\React::enqueue() : \ModularityLoginForm\Helper\React::enqueue();
 
         wp_enqueue_script('modularity-login-form-js');
         wp_localize_script('modularity-login-form-js', 'ModularityLoginFormObject', $this->scriptData());
