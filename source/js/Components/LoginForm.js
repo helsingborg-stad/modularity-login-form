@@ -123,6 +123,13 @@ export default class LoginForm extends React.Component {
                         }
 
                         Notice.showNotice(message);
+
+                        //Just refresh page if logging out
+                        if (loginVars === null) {
+                             setTimeout(() => location.reload(), 600);
+                             return;
+                        }
+
                         transfer = json.data.url.replace(/\\/g, '');
                         setTimeout(() => window.location.replace(transfer), 600);
 
