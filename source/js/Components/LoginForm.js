@@ -184,7 +184,7 @@ export default class LoginForm extends React.Component {
                         }}
                     >
                         <div className="form-horizontal">
-                            <div className="form-group grid-md-5">
+                            <div className="form-group grid-md-12">
                                 <input
                                     type="text"
                                     name="authUsername"
@@ -203,7 +203,7 @@ export default class LoginForm extends React.Component {
                                     required
                                 />
                             </div>
-                            <div className="form-group grid-md-5">
+                            <div className="form-group grid-md-12">
                                 <input
                                     type="password"
                                     name="authPassword"
@@ -228,7 +228,7 @@ export default class LoginForm extends React.Component {
                                     {translation.forgotpasswd}
                                 </a>
                             </div>
-                            <div className="form-group grid-md-2">
+                            <div className="form-group grid-md-12">
                                 <button
                                     type="button"
                                     className="btn btn-primary"
