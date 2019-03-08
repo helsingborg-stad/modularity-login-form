@@ -1,5 +1,4 @@
 .modularity-mod-loginform {
-
     #modularity-login-form {
         #modularity-login-form-message {
             max-width: 486px;
@@ -7,7 +6,9 @@
             padding: 10px 15px;
             margin-bottom: 10px;
 
-            &.success, &.info, &.danger {
+            &.success,
+            &.info,
+            &.danger {
                 margin: 0 auto;
                 max-width: 450px;
                 padding: 1.2em 1em;
@@ -15,11 +16,11 @@
         }
 
         .form-group {
-            position:relative;
-            margin:0px;
+            position: relative;
+            margin: 0px;
             input {
                 margin-bottom: 10px;
-                width:100%;
+                width: 100%;
             }
 
             @media only screen and (max-width: 895px) {
@@ -27,29 +28,17 @@
                 width: 100%;
                 max-width: 100%;
             }
-            a {
-                position: absolute;
-                right: 16px;
-                bottom: -28px;
-                font-size:14px;
-                @media only screen and (max-width: 320px) {
-                    position:relative;
-                    bottom: auto;
-                    right: 0px;
-                    float:right;
-                }
-            }
         }
         .form-notice {
             position: absolute;
             @media only screen and (max-width: 895px) {
-                position:relative;
+                position: relative;
                 padding-bottom: 10px;
             }
         }
         .user-logged-in {
             margin: 0 auto;
-            text-align:center;
+            text-align: center;
             .user-data {
                 margin-top: -15px;
                 margin-bottom: 10px;
@@ -58,10 +47,9 @@
                 max-width: 300px;
                 width: 100%;
             }
-
         }
         .danger {
-            margin-bottom:10px !important;
+            margin-bottom: 10px !important;
         }
     }
 }

@@ -41,13 +41,25 @@ class LoginForm extends \Modularity\Module
             'restUrl' => get_rest_url(),
             'moduleId' => $this->data['ID'],
             'token' => \ModularityLoginForm\App::encrypt($this->data, $token['value']),
-            'page' => \ModularityLoginForm\App::encrypt($this->data, $page['value'])
+            'page' => \ModularityLoginForm\App::encrypt($this->data, $page['value']),
         );
 
+        // Create account link
+        if (get_field('show_create_account_link', $this->data['ID'])) {
+            $customLink = get_field('custom_create_account_url', $this->data['ID']);
 
-        if ( is_user_logged_in() ) {
+            $data['dataAttributes']['createAccount']['url'] = is_array($customLink) && !empty($customLink)
+            ? $customLink['url']
+            : site_url('/wp-login.php?action=register&redirect_to=' . get_permalink());
+
+            $data['dataAttributes']['createAccount']['title'] = is_array($customLink) && !empty($customLink)
+            ? $customLink['title']
+            : __('Create account', 'modularity-login-form');
+        }
+
+        if (is_user_logged_in()) {
             $currentUser = wp_get_current_user();
-            if ($currentUser->user_firstname && $currentUser->user_lastname){
+            if ($currentUser->user_firstname && $currentUser->user_lastname) {
                 $data['dataAttributes']['fullusername'] = $currentUser->user_firstname . " " . $currentUser->user_lastname;
             } else {
                 $data['dataAttributes']['fullusername'] = $currentUser->display_name;
@@ -95,7 +107,6 @@ class LoginForm extends \Modularity\Module
         wp_enqueue_script('modularity-login-form-js');
         wp_localize_script('modularity-login-form-js', 'ModularityLoginFormObject', $this->scriptData());
     }
-
 
     /**
      * Setting all variables for localize script

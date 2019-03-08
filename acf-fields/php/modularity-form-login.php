@@ -27,6 +27,48 @@
             'multiple' => 0,
         ),
         1 => array(
+            'key' => 'field_5c826f0013b78',
+            'label' => __('Show create account link', 'modularity-login-form'),
+            'name' => 'show_create_account_link',
+            'type' => 'true_false',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 0,
+            'ui' => 0,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        2 => array(
+            'key' => 'field_5c826f2513b79',
+            'label' => __('Custom create account url', 'modularity-login-form'),
+            'name' => 'custom_create_account_url',
+            'type' => 'link',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_5c826f0013b78',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'return_format' => 'array',
+        ),
+        3 => array(
             'key' => 'field_5c3de0b2b75f2',
             'label' => __('Api encryption salt', 'modularity-login-form'),
             'name' => 'mod_login_form_api_encryption_salt',
@@ -46,7 +88,7 @@
             'maxlength' => '',
             'disabled' => true,
         ),
-        2 => array(
+        4 => array(
             'key' => 'field_5c3de127b75f3',
             'label' => __('Api encryption key', 'modularity-login-form'),
             'name' => 'mod_login_form_api_encryption_key',
@@ -66,7 +108,7 @@
             'maxlength' => '',
             'disabled' => true,
         ),
-        3 => array(
+        5 => array(
             'key' => 'field_5c3de14bb75f4',
             'label' => __('Api token', 'modularity-login-form'),
             'name' => 'mod_login_form_api_token',

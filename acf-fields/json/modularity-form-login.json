@@ -22,6 +22,48 @@
             "multiple": 0
         },
         {
+            "key": "field_5c826f0013b78",
+            "label": "Show create account link",
+            "name": "show_create_account_link",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5c826f2513b79",
+            "label": "Custom create account url",
+            "name": "custom_create_account_url",
+            "type": "link",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5c826f0013b78",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
             "key": "field_5c3de0b2b75f2",
             "label": "Api encryption salt",
             "name": "mod_login_form_api_encryption_salt",
